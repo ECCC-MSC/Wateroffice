@@ -104,6 +104,10 @@ http://geo.weather.gc.ca/geomet-beta/features/collections/hydrometric-daily-mean
 
 Any query can be exported to CSV by adding `f=csv` to the request.  E
 
+### Sorting
+
+Any query can be sorted by adding `sortby=PROPERTY:X`, where `PROPERTY` is the sort property and `X` is the sort order (`A` is ascending, `D` is descending).  Sort order is optional.  Sorting by multiple properties is supported by providing a comma-separated list to the `sortby` parameter.
+
 ## Access by Identifier
 
 Fetch a single feature by identifier:
