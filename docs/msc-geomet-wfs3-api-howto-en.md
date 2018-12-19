@@ -102,7 +102,7 @@ http://geo.weather.gc.ca/geomet-beta/features/collections/hydrometric-daily-mean
 
 ### Exporting to CSV format
 
-Any query can be exported to CSV by adding `f=csv` to the request.  E
+Any query can be exported to CSV by adding `f=csv` to the request.
 
 ### Sorting
 
