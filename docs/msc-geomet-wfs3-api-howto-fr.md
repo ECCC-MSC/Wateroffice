@@ -105,7 +105,7 @@ Query and limit to features 101-200:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=10CD001&startindex=101&limit=100
 
-## Strategies for paging
+#### Strategies for paging
 
 The paging strategy is commonly used in support of performance when returning large data extractions.  For example, a client could page by 1000 features to cycle through an entire station record:
 
