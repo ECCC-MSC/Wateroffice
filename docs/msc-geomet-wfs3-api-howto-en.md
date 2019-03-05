@@ -111,7 +111,7 @@ The paging strategy is commonly used in support of performance when returning la
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=01AP004&startindex=0&limit=1000
 
-https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=01AP004&startindex=10&limit=1000
+https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=01AP004&startindex=1000&limit=1000
 
 The client can then simply cycle through all items until there no longer any records.  This would constitute the entire record.
 
