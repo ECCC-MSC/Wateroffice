@@ -1,157 +1,156 @@
-# MSC GeoMet Web Feature Service (WFS) 3.0 API HowTo
+# HowTo de l'API WFS (Web Feature Service) MSC GeoMet Web 3.0
 
 ## OGC Web Feature Service 3.0
 
-## MSC GeoMet WFS 3.0 API Overview
+## Présentation de l'API MSC GeoMet WFS 3.0
 
-The [OGC WFS 3.0 API](https://rawgit.com/opengeospatial/WFS_FES/master/docs/17-069.html) provides
-a specification to querying geospatial data on the web.
+[L'API OGC WFS 3.0](https://rawgit.com/opengeospatial/WFS_FES/master/docs/17-069.html) fournit une liste de spécifications standardisées permettant d'interroger des données géospatiales sur le Web.
 
-The service operates over HTTP.
+Le service fonctionne via HTTP.
 
-Requests are made via HTTP GET requests.
+Les demandes sont effectuées via des requêtes HTTP GET.
 
-Responses are JSON/[GeoJSON](http://geojson.org/) by default.
+Les réponses sont au format JSON/[GeoJSON](http://geojson.org/) par défaut.
 
-No HTTP authentication is required.
+Aucune authentification HTTP n'est requise.
 
-## Service Endpoints
+## Points de service
 
 ### WFS 3
 
 https://geo.weather.gc.ca/geomet/features
 
-### OpenAPI 3.0 Document
+### Documentation OpenAPI 3.0
 
 https://geo.weather.gc.ca/geomet/features/api
 
-## Feature Collections
+## Collections d'entités
 
-List all feature collections available:
+Répertoriez toutes les collections d’entités disponibles:
 
 https://geo.weather.gc.ca/geomet/features/collections
 
-The response provides a list of feature collections with associated metadata (title, description, links, extent, CRS).
+La réponse fournit une liste de collections de fonctionnalités avec leurs métadonnées associées (titre, description, liens, étendue, CRS).
 
-## Feature Collection 
+## Collection de d'entités
 
-List a single feature collection:
+Répertoriez une seule collection d'entités:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-stations
 
-## Inspecting Feature Collection Schema
+## Inspection du schéma de collection d'entités
 
-Issue a query returning a single feature to inspect geometry and properties:
+Émettez une requête renvoyant une seule entité pour inspecter sa géométrie et ses propriétés:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?limit=1
 
-## Querying
+## Requête
 
-Querying feature collections allows for spatial, temporal and property filtering.  Filter parameters
-can be combined to formulate an exclusive ('and') search.
+Les requêtes sur les collections d'entités permettent un filtrage spatial, temporel et sur des propriétés. Les paramètres de filtre peuvent être combinés pour formuler une recherche exclusive ('et').
 
-The examples that follow use the [hydrometric daily mean](https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean) feature collection.
+Les exemples suivants utilisent la collection [hydrométrique de moyennes quotidiennes](https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean).
 
-Default query, no filters:
+Requête par défaut, pas de filtres:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items
 
 ### Spatial
 
-Query by bounding box (minx, miny, maxx, maxy)
+Requête par zone de sélection (minx, miny, maxx, maxy)
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?bbox=-140,43.2,-65,67
 
-### Temporal
+### Temporel
 
-Query by a single time instant:
+Requête pour une valeur instantannée:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?time=1972-10-30
 
-Query by a time extent:
+Requête pour un intervalle de temps:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?time=1972-10-30/2010-07-31
 
-### Property
+### Propriété
 
-Query by a feature collection property:
+Requête par une propriété de collection d'entités:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=10CD001
 
-### Paging
+### Pagination
 
 #### Startindex
-The `startindex` parameter can be used to specify the record to start at when extracting
-features.  The default value is 0 (first feature).
+Le paramètre `startindex` peut être utilisé pour spécifier l’enregistrement à partir duquel extraire les entités. La valeur par défaut est 0 (premièreentité).
 
-#### Limit
-The `limit` parameter is used to define the maximum records to return as part of querying
-for features.  The default response size is 500 features.  Setting a `limit` of 0 results
-in returning only the number of features found (without the actual features returned).
+#### Limite
+Le paramètre `limit` permet de définir le nombre maximal d'enregistrements à renvoyer. La taille de réponse par défaut est de 500 entitée. Si vous définissez une `limite` de 0, seul le nombre d'entités trouvées sera retourné (sans les entités réelles retournées).
 
-#### Paging through results
+#### Parcourir les résultats
 
-The `startindex` and `limit` parameters can be used in tandem to cycle through feature collections.  The examples below demonstrate how to adjust and page through query results.
+Les paramètres `startindex` et `limit` peuvent être utilisés en tandem pour parcourir les collections d’entités. Les exemples ci-dessous montrent comment ajuster et parcourir les résultats d'une requête.
 
-Query and limit to features 1-2:
+Requête et limite aux entités 1-2:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=10CD001&limit=2
 
-Query and limit to features 1-100:
+Requête et limite aux entités 1 à 100:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=10CD001&limit=100
 
-Query and limit to features 101-200:
+Requête et limite aux entités 101-200:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=10CD001&startindex=101&limit=100
 
-#### Strategies for paging
+#### Stratégies de pagination
 
-The paging strategy is commonly used in support of performance when returning large data extractions.  For example, a client could page by 1000 features to cycle through an entire station record:
+La stratégie de pagination est couramment utilisée pour améliorer les performances lors du retour d'extractions de données volumineuses. Par exemple, un client peut faire défiler par 1 000 entités pour parcourir un enregistrement de station complet:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=01AP004&startindex=0&limit=1000
 
-https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=01AP004&startindex=10&limit=1000
+https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=01AP004&startindex=1000&limit=1000
 
-The client can then simply cycle through all items until there no longer any records.  This would constitute the entire record.
+Le client peut alors simplement parcourir tous les éléments jusqu'à ce qu'il n'y ait plus d'enregistrements. Cela constituerait le dossier complet.
 
-Another strategy that can be used is to query for all data without returning any records:
+Une autre stratégie possible consiste à interroger toutes les données sans renvoyer aucun enregistrement:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=01AP004&limit=0
 
-...and then inspecting the response (see `numberMatched`) to assess the size of the entire record.  The client can then decide how or whether to page accordingly.
+... puis en examinant la réponse (voir `numéro Correspondance`) pour évaluer la taille de l'enregistrement complet. Le client peut alors décider comment ou s'il doit paginer en conséquence.
+ 
+### Combinaison de paramètres de filtre
 
-### Combining Filter Parameters
-
-Query all daily mean data from a single station between 2001 and 2010:
+Interrogez toutes les moyennes quotidiennes d'une station entre 2001 et 2010:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?STATION_NUMBER=10CD001&time=2001-01-01/2010-12-31
 
-### Exporting to CSV format
+### Exporter au format CSV
 
-Any query can be exported to CSV by adding `f=csv` to the request.
+Toute requête peut être exportée au format CSV en ajoutant `f=csv` à la demande.
 
-## Access by Identifier
+### Tri
+Toute requête peut être triée en ajoutant sortby = PROPERTY: X, où PROPERTY est la propriété de tri et X, l'ordre de tri (A est ascendant, D est descendant). L'ordre de tri est facultatif. Le tri en fonction de plusieurs propriétés est pris en charge en fournissant au paramètre sortby une liste séparée par des virgules.
 
-Fetch a single feature by identifier:
+## Accès par identifiant
+
+Récupérer une seule caractéristique par identifiant:
 
 https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?f=csv
 
-## Tools and Implementations
+## Outils et implémentations
 
 ### GDAL
 
-Using [GDAL](http://www.gdal.org/drv_wfs3.html)'s WFS 3 support:
+Utilisation du support WFS 3 de [GDAL](http://www.gdal.org/drv_wfs3.html):
 
 ```bash
 # list datasets
-ogrinfo WFS3:https://geo.weather.gc.ca/geomet/features
-# describe a single dataset
-ogrinfo WFS3:https://geo.weather.gc.ca/geomet/features hydrometric-daily-mean -al -so
-# perform spatial query
-ogrinfo WFS3:https://geo.weather.gc.ca/geomet/features hydrometric-daily-mean -spat -100 50 -90 55
+ogrinfo WFS3: https://geo.weather.gc.ca/geomet/features
+# décrire un seul jeu de données
+ogrinfo WFS3: https://geo.weather.gc.ca/geomet/features hydrometric-daily-mean -al -so
+# effectuer une requête spatiale
+ogrinfo WFS3: https://geo.weather.gc.ca/geomet/features hydrometric-daily-mean -spat -100 50 -90 55
 ```
 
 ### geojson.io
 
-Using [geojson.io](https://geojson.io), copy/paste any query result to visualize and point/click query.
+En utilisant [geojson.io](https://geojson.io), copiez / collez le résultat de la requête pour visualiser et pointer / cliquer sur la requête.
+
