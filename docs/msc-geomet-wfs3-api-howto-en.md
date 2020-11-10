@@ -139,7 +139,7 @@ Any query can be sorted by adding `sortby=PROPERTY:X`, where `PROPERTY` is the s
 
 Fetch a single feature by identifier:
 
-https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?f=csv
+https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items/08JB003.1950-08-02?f=json
 
 ## Tools and Implementations
 
