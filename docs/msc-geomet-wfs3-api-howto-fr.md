@@ -133,7 +133,8 @@ Toute requête peut être triée en ajoutant sortby = PROPERTY: X, où PROPERTY 
 
 Récupérer une seule caractéristique par identifiant:
 
-https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items?f=csv
+https://geo.weather.gc.ca/geomet/features/collections/hydrometric-daily-mean/items/08JB003.1950-08-02?f=json
+
 
 ## Outils et implémentations
 
